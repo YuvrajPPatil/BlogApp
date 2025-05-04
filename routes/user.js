@@ -28,6 +28,14 @@ router.post("/signin",async(req,res)=>{
 
 router.post("/signup", async(req,res)=>{
     const {fullName,email,password}=req.body;
+
+    const userExist=User.findOne({email});
+    // console.log(userExist);  
+    if(userExist){
+        return res.render("signup",{
+            error:"User Already Present",
+        });
+    }
     await User.create({
             fullName,
             email,
